@@ -1,16 +1,18 @@
 <!DOCTYPE html>
-<!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/style.css') }}">
     <title>Is it Ben's Birthday?</title>
   </head>
   <body>
-    <h1>Is it Ben's birthday?<br><h1>
-    {% if isMyBirthday %}
-      <h2>Yes it is! Say happy birthday!</h2>
-    {% else %}
-      <h2>Nope!</h2>
-    {% endif %}
+    <div class="container">
+      {% if isMyBirthday %}
+        Yes it is! Say happy birthday!
+      {% else %}
+        Nope!
+      {% endif %}
+    </div>
+
   </body>
 </html>
