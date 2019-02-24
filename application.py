@@ -10,3 +10,6 @@ def index():
     headline = "Is it Ben's birthday?"
     return render_template("index.html", headline=headline,
      isMyBirthday=isMyBirthday)
+
+if __name__ == "__main__":
+    app.run(host='0.0.0.0')
