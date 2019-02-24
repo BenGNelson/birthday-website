@@ -1,9 +1,9 @@
-from flask_bootstrap import Bootstrap
+#from flask_bootstrap import Bootstrap
 from flask import Flask, render_template
 import datetime
 
 app = Flask(__name__)
-bootstrap = Bootstrap(app)
+#bootstrap = Bootstrap(app)
 
 @app.route("/")
 def index():
