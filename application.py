@@ -2,7 +2,7 @@
 from flask import Flask, render_template
 import datetime
 
-app = Flask(__name__)
+app = Flask(__name__, subdomain_matching=True)
 #bootstrap = Bootstrap(app)
 
 @app.route("/")
