@@ -3,7 +3,7 @@ from flask import Flask, render_template
 import datetime
 
 app = Flask(__name__, subdomain_matching=True)
-#bootstrap = Bootstrap(app)
+app.config['SERVER_NAME'] = 'isitbensbirthday.com'
 
 @app.route("/")
 def index():
@@ -13,10 +13,13 @@ def index():
     return render_template("index.html", headline=headline,
      isMyBirthday=isMyBirthday)
 
+@app.route("/when")
+def when1():
+    return render_template("when.html")
+
 @app.route("/", subdomain="when")
 def when():
     return render_template("when.html")
-
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0')
