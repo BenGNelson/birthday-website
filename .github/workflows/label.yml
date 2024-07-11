@@ -2,18 +2,18 @@ name: Build & Deploy
 on:
   push:
     branches: [main]
-jobs:
 
-  build:
-    name: Build
-    runs-on: appleboy/ssh-action@v1.0.3
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
     steps:
-    - name: executing remote ssh commands using password
-      uses: appleboy/ssh-action@v1.0.3
-      with:
+      - name: Deploy Website
+        uses: appleboy/ssh-action@v0.1.2
+        with:
           host: ${{ secrets.SSH_HOST }} # IP Address
           key: ${{ secrets.SSH_KEY }} # Public/private key of server
           username: ${{ secrets.SSH_USERNAME }} # Server username
+     
           script: |
             cd /home/ben/repos/birthday-website
             git checkout main
