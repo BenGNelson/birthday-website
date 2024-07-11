@@ -36,6 +36,6 @@ jobs:
         envs: HOST_SOURCE_DIR,HOST_DESTINATION_DIR
         script: |
             cd $HOST_SOURCE_DIR
-            cp $HOST_DESTINATION_DIR/index.html
+            cp index.html $HOST_DESTINATION_DIR/index.html
             sudo /etc/init.d/apache2 restart
 
