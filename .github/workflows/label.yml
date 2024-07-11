@@ -11,8 +11,7 @@ jobs:
     - name: Get the newest version of the website
       uses: appleboy/ssh-action@v1.0.3
       env:
-        HOST_SOURCE_DIR: ${{ HOST_SOURCE_DIR }}
-        HOST_DESTINATION_DIR: ${{ HOST_DESTINATION_DIR }}
+        HOST_SOURCE_DIR: ${{ secrets.HOST_SOURCE_DIR }}
       with:
         host: ${{ secrets.SSH_HOST }}
         username: ${{ secrets.SSH_USERNAME }}
@@ -26,8 +25,8 @@ jobs:
     - name: Deploy site
       uses: appleboy/ssh-action@v1.0.3
       env:
-        HOST_SOURCE_DIR: ${{ HOST_SOURCE_DIR }}
-        HOST_DESTINATION_DIR: ${{ HOST_DESTINATION_DIR }}
+        HOST_SOURCE_DIR: ${{ secrets.HOST_SOURCE_DIR }}
+        HOST_DESTINATION_DIR: ${{ secrets.HOST_DESTINATION_DIR }}
       with:
         host: ${{ secrets.SSH_HOST }}
         username: ${{ secrets.SSH_USERNAME }}
