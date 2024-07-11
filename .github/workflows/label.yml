@@ -1,0 +1,21 @@
+name: Build & Deploy
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Deploy Birthday Website to Bespin
+        with:
+          host: ${{ secrets.SSH_HOST }} # IP Address
+          key: ${{ secrets.SSH_KEY }} # Public/private key of server
+          username: ${{ secrets.SSH_USERNAME }} # Server username
+
+          script:
+            cd /home/ben/repos/birthday-website
+            git checkout main
+            git pull
+            cp index.html /var/www/isitbensbirthday.com/public_html/index.html
+            sudo /etc/init.d/apache2 restart
