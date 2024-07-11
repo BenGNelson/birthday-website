@@ -1,0 +1,41 @@
+name: Build & Deploy Site
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Get the newest version of the website
+      uses: appleboy/ssh-action@v1.0.3
+      env:
+        HOST_SOURCE_DIR: ${{ secrets.HOST_SOURCE_DIR }}
+      with:
+        host: ${{ secrets.SSH_HOST }}
+        username: ${{ secrets.SSH_USERNAME }}
+        password: ${{ secrets.SSH_KEY }}
+        port: ${{ secrets.PORT }}
+        envs: HOST_SOURCE_DIR
+        script: |
+            cd $HOST_SOURCE_DIR
+            git checkout main
+            git pull
+            
+    - name: Deploy site
+      uses: appleboy/ssh-action@v1.0.3
+      env:
+        HOST_SOURCE_DIR: ${{ secrets.HOST_SOURCE_DIR }}
+        HOST_DESTINATION_DIR: ${{ secrets.HOST_DESTINATION_DIR }}
+      with:
+        host: ${{ secrets.SSH_HOST }}
+        username: ${{ secrets.SSH_USERNAME }}
+        password: ${{ secrets.SSH_KEY }}
+        port: ${{ secrets.PORT }}
+        envs: HOST_SOURCE_DIR,HOST_DESTINATION_DIR
+        script: |
+            cd $HOST_SOURCE_DIR
+            cp $HOST_DESTINATION_DIR/index.html
+            sudo /etc/init.d/apache2 restart
+
