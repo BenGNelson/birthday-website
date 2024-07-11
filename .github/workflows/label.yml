@@ -19,6 +19,7 @@ jobs:
         port: ${{ secrets.PORT }}
         envs: HOST_SOURCE_DIR
         script: |
+            echo "source: $HOST_SOURCE_DIR"
             cd $HOST_SOURCE_DIR
             git checkout main
             git pull
@@ -35,6 +36,8 @@ jobs:
         port: ${{ secrets.PORT }}
         envs: HOST_SOURCE_DIR,HOST_DESTINATION_DIR
         script: |
+            echo "source: $HOST_SOURCE_DIR"
+            echo "dest: $HOST_DESTINATION_DIR"
             cd $HOST_SOURCE_DIR
             cp index.html $HOST_DESTINATION_DIR/index.html
             sudo /etc/init.d/apache2 restart
