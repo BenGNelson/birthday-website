@@ -10,13 +10,6 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
-
-    - name: Copy files to VPS
-      uses: appleboy/scp-action@master
-      with:
-        host: ${{ secrets.SSH_HOST }} # IP Address
-        key: ${{ secrets.SSH_KEY }} # Public/private key of server
-        username: ${{ secrets.SSH_USERNAME }} # Server username
         
     - name: run commands
       uses: appleboy/ssh-action@v1.0.3
