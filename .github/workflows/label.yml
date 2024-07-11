@@ -1,4 +1,4 @@
-name: Build & Deploy
+name: Build & Deploy Site
 on:
   push:
     branches: [main]
@@ -6,15 +6,25 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    
     steps:
-      - name: Deploy Website
-        uses: appleboy/ssh-action@v0.1.2
-        with:
-          host: ${{ secrets.SSH_HOST }} # IP Address
-          key: ${{ secrets.SSH_KEY }} # Public/private key of server
-          username: ${{ secrets.SSH_USERNAME }} # Server username
-     
-          script: |
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Copy files to VPS
+      uses: appleboy/scp-action@master
+      with:
+        host: ${{ secrets.SSH_HOST }} # IP Address
+        key: ${{ secrets.SSH_KEY }} # Public/private key of server
+        username: ${{ secrets.SSH_USERNAME }} # Server username
+        
+    - name: run commands
+      uses: appleboy/ssh-action@v1.0.3
+      with:
+        host: ${{ secrets.SSH_HOST }} # IP Address
+        key: ${{ secrets.SSH_KEY }} # Public/private key of server
+        username: ${{ secrets.SSH_USERNAME }} # Server username
+        script: |
             cd /home/ben/repos/birthday-website
             git checkout main
             git pull
