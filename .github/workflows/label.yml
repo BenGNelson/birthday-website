@@ -14,6 +14,7 @@ jobs:
         host: ${{ secrets.SSH_HOST }} # IP Address
         key: ${{ secrets.SSH_KEY }} # Public/private key of server
         username: ${{ secrets.SSH_USERNAME }} # Server username
+        port: 22
         script: |
             cd /home/ben/repos/birthday-website
             git checkout main
