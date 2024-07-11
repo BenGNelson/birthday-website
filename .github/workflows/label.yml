@@ -8,16 +8,18 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-    - name: run commands
-      uses: appleboy/ssh-action@master
+    - name: executing remote ssh commands using password
+      uses: appleboy/ssh-action@v1.0.3
       with:
-        host: ${{ secrets.SSH_HOST }} # IP Address
-        key: ${{ secrets.SSH_KEY }} # Public/private key of server
-        username: ${{ secrets.SSH_USERNAME }} # Server username
-        port: 22
-        script: |
-            cd /home/ben/repos/birthday-website
-            git checkout main
-            git pull
-            cp index.html /var/www/isitbensbirthday.com/public_html/index.html
-            sudo /etc/init.d/apache2 restart
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        password: ${{ secrets.PASSWORD }}
+        port: ${{ secrets.PORT }}
+        script: whoami
+        # script: |
+        #     cd /home/ben/repos/birthday-website
+        #     git checkout main
+        #     git pull
+        #     cp index.html /var/www/isitbensbirthday.com/public_html/index.html
+        #     sudo /etc/init.d/apache2 restart
+
