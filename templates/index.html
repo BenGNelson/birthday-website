@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Is it July 5th?</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@900&display=swap" rel="stylesheet">
+    <style>
+        /* A universal rule to make layout math more intuitive */
+        * {
+            box-sizing: border-box;
+        }
+
+        /* Basic reset for styling */
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden; /* Prevents scrollbars */
+            background-color: #121212; /* A clean, dark background */
+            color: #ffffff; /* White text */
+        }
+
+        /* Flex container to center the content vertically and horizontally */
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            width: 100%;
+            /* Add some padding to create a small buffer from the window edges */
+            padding: 2vh 2vw;
+        }
+
+        /* The main text element */
+        #message {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 900;
+            text-transform: uppercase;
+            text-align: center;
+            /* Font size will now be set dynamically by JavaScript */
+            line-height: 1; /* A standard line height */
+            white-space: nowrap; /* Prevent wrapping initially for size calculation */
+
+            /* A simpler text shadow for depth */
+            text-shadow: 4px 4px 10px rgba(0, 0, 0, 0.5);
+            
+            /* Animation for a fade-in effect */
+            animation: fadeIn 1s ease-in-out forwards;
+            opacity: 0;
+            visibility: hidden; /* Hide until sized to prevent flash of oversized text */
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Specific styles for the 'YEP' message */
+        .yep {
+            color: #4CAF50; /* A nice green color */
+        }
+
+        /* Specific styles for the 'NOPE' message */
+        .nope {
+            color: #F44336; /* A bold red color */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 id="message"></h1>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            
+            const messageElement = document.getElementById('message');
+            const containerElement = document.querySelector('.container');
+
+            // --- Dynamic Font Sizing Function ---
+            function adjustFontSize() {
+                // Allow text to wrap for measurement
+                messageElement.style.whiteSpace = 'normal';
+
+                let fontSize = 25; // Start with a large font size (in vw)
+                messageElement.style.fontSize = fontSize + 'vw';
+
+                // Iteratively decrease font size until the text's scroll dimensions
+                // are smaller than the container's client dimensions.
+                while ((messageElement.scrollHeight > containerElement.clientHeight || messageElement.scrollWidth > containerElement.clientWidth) && fontSize > 1) {
+                    fontSize -= 0.5; // Decrease by half a vw unit
+                    messageElement.style.fontSize = fontSize + 'vw';
+                }
+                
+                // Once sized, make it visible
+                messageElement.style.visibility = 'visible';
+            }
+
+            // --- Main Logic ---
+            const yepMessages = [
+                "OH YA IT IS"
+            ];
+            const nopeMessages = [
+                "NOPE"
+            ];
+
+            const today = new Date();
+            const month = today.getMonth();
+            const day = today.getDate();
+
+            if (month === 6 && day === 5) {
+                const randomIndex = Math.floor(Math.random() * yepMessages.length);
+                messageElement.textContent = yepMessages[randomIndex];
+                messageElement.classList.add('yep');
+            } else {
+                const startOfYear = new Date(today.getFullYear(), 0, 0);
+                const diff = today - startOfYear;
+                const oneDay = 1000 * 60 * 60 * 24;
+                const dayOfYear = Math.floor(diff / oneDay);
+                const dailyIndex = dayOfYear % nopeMessages.length;
+                
+                messageElement.textContent = nopeMessages[dailyIndex];
+                messageElement.classList.add('nope');
+            }
+            
+            // Call the function to set the correct font size
+            adjustFontSize();
+
+            // Add a listener to re-calculate font size if the window is resized
+            window.addEventListener('resize', adjustFontSize);
+        });
+    </script>
+
+</body>
+</html>
